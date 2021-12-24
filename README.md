@@ -1,6 +1,6 @@
 # peliculas
 
-A new Flutter project.
+Plaza => Front end dev Flutter 
 
 ## Getting Started
 
