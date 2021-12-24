@@ -25,8 +25,13 @@ class PeliculasProvider {
   }
 
   Future<List<Pelicula>> _procesarRespuesta(Uri url ) async  {
-
-    final resp = await  http.get(url); 
+    Map<String, String> headers = {
+      "Content-type": "application/json; charset=UTF-8"
+    };
+    final urlP = Uri.parse(
+      '$url'
+    );
+    final resp = await  http.get(urlP, headers: headers);
 
     final decodeData = json.decode(resp.body);
 
@@ -96,8 +101,6 @@ class PeliculasProvider {
     return cast.actores;
 
   }
-
-
   
   Future<List<Pelicula>> buscarPelicula(String query) async  {
     final url = Uri.https(_url, '3/search/movie', {

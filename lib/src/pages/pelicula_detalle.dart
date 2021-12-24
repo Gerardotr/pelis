@@ -4,55 +4,46 @@ import 'package:peliculas/src/models/pelicula_model.dart';
 import 'package:peliculas/src/providers/pelicula_provider.dart';
 
 class PeliculaDetalle extends StatelessWidget {
-  
-
   @override
   Widget build(BuildContext context) {
-
     final Pelicula pelicula = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
-      body: CustomScrollView(
-
-        slivers: <Widget>[
-
-          _crearAppbar(pelicula),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                SizedBox(height: 10.0,),
-                _posterTitulo(context, pelicula),
-                descripcion(pelicula),
-                descripcion(pelicula),
-                descripcion(pelicula),
-                descripcion(pelicula),
-                descripcion(pelicula),
-                descripcion(pelicula),
-                descripcion(pelicula),
-                _crearCasting(pelicula)
-
-              ]
+        body: CustomScrollView(
+      slivers: <Widget>[
+        _crearAppbar(pelicula, context),
+        SliverList(
+          delegate: SliverChildListDelegate([
+            SizedBox(
+              height: 10.0,
             ),
-          )
-
-        ],
-
-      )
-    );
+            _posterTitulo(context, pelicula),
+            descripcion(pelicula),
+            descripcion(pelicula),
+            descripcion(pelicula),
+            descripcion(pelicula),
+            descripcion(pelicula),
+            descripcion(pelicula),
+            descripcion(pelicula),
+            _crearCasting(pelicula)
+          ]),
+        )
+      ],
+    ));
   }
 
-  Widget _crearAppbar(Pelicula pelicula) {
-
+  Widget _crearAppbar(Pelicula pelicula, context) {
     return SliverAppBar(
       elevation: 2.0,
-      backgroundColor: Colors.indigo,
+      backgroundColor: Theme.of(context).primaryColor,
       expandedHeight: 200.0,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
-        title: Text(pelicula.title,
-        style: TextStyle(color: Colors.white, fontSize: 16.0),
+        title: Text(
+          pelicula.title,
+          style: TextStyle(color: Colors.white, fontSize: 16.0),
         ),
         background: FadeInImage(
           image: NetworkImage(pelicula.getBackgroundImg()),
@@ -62,7 +53,6 @@ class PeliculaDetalle extends StatelessWidget {
         ),
       ),
     );
-
   }
 
   Widget _posterTitulo(BuildContext context, Pelicula pelicula) {
@@ -75,25 +65,34 @@ class PeliculaDetalle extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
               child: Image(
-                image: NetworkImage(pelicula.getPosterImg(),),
+                image: NetworkImage(
+                  pelicula.getPosterImg(),
+                ),
                 height: 150.0,
               ),
             ),
           ),
-          SizedBox(width: 20.0,),
+          SizedBox(
+            width: 20.0,
+          ),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(pelicula.title, style: Theme.of(context).textTheme.title, overflow: TextOverflow.ellipsis,),
-                Text(pelicula.originalTitle, style: Theme.of(context).textTheme.subhead, overflow: TextOverflow.ellipsis,),
+                Text(
+                  pelicula.title,
+                  style: TextStyle(color: Colors.white),
+                  overflow: TextOverflow.ellipsis,
+                ),
                 Row(
                   children: <Widget>[
-                    Icon(Icons.star),
-                    Text(pelicula.voteAverage.toString(), style: Theme.of(context).textTheme.subhead)
+                    Icon(Icons.star, color: Colors.yellow,),
+                    Text(
+                      pelicula.voteAverage.toString(),
+                      style: TextStyle(color: Colors.white),
+                    )
                   ],
                 )
-
               ],
             ),
           )
@@ -105,13 +104,15 @@ class PeliculaDetalle extends StatelessWidget {
   Widget descripcion(Pelicula pelicula) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-      child: Text(pelicula.overview, textAlign: TextAlign.justify,),
-
+      child: Text(
+        pelicula.overview,
+        style: TextStyle(color: Colors.white),
+        textAlign: TextAlign.justify,
+      ),
     );
   }
 
   Widget _crearCasting(Pelicula pelicula) {
-
     final peliProvider = new PeliculasProvider();
 
     return FutureBuilder(
@@ -126,29 +127,20 @@ class PeliculaDetalle extends StatelessWidget {
         }
       },
     );
-
   }
 
   Widget _crearActoresPageView(List<Actor> actores) {
-
     return SizedBox(
       height: 200.0,
       child: PageView.builder(
         pageSnapping: false,
-        controller: PageController(
-          viewportFraction: 0.3,
-          initialPage: 1
-        ),
+        controller: PageController(viewportFraction: 0.3, initialPage: 1),
         itemCount: actores.length,
         itemBuilder: (context, i) {
           return _actorTargeta(actores[i]);
         },
-
       ),
     );
-
-
-
   }
 
   Widget _actorTargeta(Actor actor) {
@@ -164,13 +156,12 @@ class PeliculaDetalle extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          SizedBox(height: 5.0,),
-          Text(actor.name,
-          overflow: TextOverflow.ellipsis
-          
-          )
+          SizedBox(
+            height: 5.0,
+          ),
+          Text(actor.name, overflow: TextOverflow.ellipsis, style: TextStyle(color: Colors.white),)
         ],
-      ) ,
+      ),
     );
   }
 }
