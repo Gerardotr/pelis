@@ -1,5 +1,5 @@
 # peliculas
-
+Gerardo Bladimir Tobar Ramos
 Plaza => Front end dev Flutter 
 
 ## Getting Started
